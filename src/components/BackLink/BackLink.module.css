@@ -1,0 +1,10 @@
+.link {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
+.link:hover {
+  color: rgb(87, 86, 86);
+}
