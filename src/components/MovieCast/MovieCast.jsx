@@ -6,8 +6,8 @@ import toast from "react-hot-toast";
 
 const MovieCast = () => {
   const { movieId } = useParams();
-  const [actors, setActors] = useState(null);
 
+  const [actors, setActors] = useState(null);
   useEffect(() => {
     try {
       const getMoreInfoForMovie = async () => {

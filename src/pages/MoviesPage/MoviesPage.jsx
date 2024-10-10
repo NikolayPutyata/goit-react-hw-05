@@ -1,27 +1,34 @@
 import MovieList from "../../components/MovieList/MovieList";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import { searchMoviesForQueryFu } from "../../../api";
 import { useLocation, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectSearchingMovies,
+  setsearchingMovies,
+} from "../../redux/slices/searchMoviesSlice";
+import Filters from "../../components/Filters/Filters";
 
 const MoviesPage = () => {
-  const [searchingMovies, setSearchingMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("query") ?? "";
   const location = useLocation();
+  const dispatch = useDispatch();
+  const searchingMovies = useSelector(selectSearchingMovies);
 
   useEffect(() => {
     const takeMoviesForQueryFu = async () => {
       try {
-        const data = await searchMoviesForQueryFu(query);
-        setSearchingMovies(data.results);
+        const { results } = await searchMoviesForQueryFu(query);
+        dispatch(setsearchingMovies(results));
       } catch {
         toast.error("Something wrong.. Try again!");
       }
     };
     takeMoviesForQueryFu();
-  }, [query]);
+  }, [query, dispatch]);
 
   const handleChangeQuery = (newQuery) => {
     searchParams.set("query", newQuery);
@@ -31,6 +38,7 @@ const MoviesPage = () => {
   return (
     <>
       <SearchForm setSearchingWord={handleChangeQuery} />
+      <Filters />
       {searchingMovies.length > 0 && (
         <MovieList list={searchingMovies} state={location} />
       )}

@@ -4,19 +4,25 @@ import { searchMovieForId } from "../../../api";
 import clsx from "clsx";
 import s from "./MovieDetailsPage.module.css";
 import { BackLink } from "../../components/BackLink/BackLink";
+import MovieInfo from "../../components/MovieInfo/MovieInfo";
+import toast from "react-hot-toast";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
-  const [oneMovie, setOneMovie] = useState(null);
   const location = useLocation();
   const goBackRef = useRef(location.state ?? "/movies");
 
+  const [oneMovie, setOneMovie] = useState(null);
   useEffect(() => {
-    const getOneMovie = async () => {
-      const movie = await searchMovieForId(movieId);
-      setOneMovie(movie);
-    };
-    getOneMovie();
+    try {
+      const getOneMovie = async () => {
+        const movie = await searchMovieForId(movieId);
+        setOneMovie(movie);
+      };
+      getOneMovie();
+    } catch {
+      toast.error("Something wrong.. Try again!");
+    }
   }, [movieId]);
 
   if (!oneMovie) {
@@ -30,20 +36,12 @@ const MovieDetailsPage = () => {
   return (
     <>
       <BackLink to={goBackRef.current}>Back</BackLink>
-      <div className={s.mainInfo}>
-        <img src={`https://image.tmdb.org/t/p/w500${oneMovie.poster_path}`} />
-        <div className={s.infoColumn}>
-          <h3>{oneMovie.title}</h3>
-          <h4>Overview:</h4>
-          <p>{oneMovie.overview}</p>
-          <h4>Genres:</h4>
-          <ul>
-            {oneMovie.genres.map(({ id, name }) => (
-              <li key={id}>{name}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <MovieInfo
+        poster_path={oneMovie.poster_path}
+        title={oneMovie.title}
+        overview={oneMovie.overview}
+        genres={oneMovie.genres}
+      />
       <span className={s.span}>
         <NavLink to="cast" className={buildLinkClass}>
           Cast

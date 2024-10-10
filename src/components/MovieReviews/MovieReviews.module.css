@@ -5,16 +5,62 @@
 }
 
 .revListItem {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 15px;
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.revListItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.revListItem h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #2c3e50;
 }
 
 .rewComment {
-  margin-top: 5px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+  margin-top: 10px;
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+}
+
+.rewComment::before {
+  content: "“";
+  font-size: 24px;
+  color: #3498db;
+  margin-right: 5px;
+}
+
+.rewComment::after {
+  content: "”";
+  font-size: 24px;
+  color: #3498db;
+  margin-left: 5px;
+}
+
+@media (max-width: 768px) {
+  .revListItem {
+    padding: 15px;
+  }
+
+  .revListItem h4 {
+    font-size: 1rem;
+  }
+
+  .rewComment {
+    font-size: 0.9rem;
+  }
 }

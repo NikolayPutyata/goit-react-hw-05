@@ -16,16 +16,14 @@ const SearchForm = ({ setSearchingWord }) => {
     }
   };
   return (
-    <>
-      <Formik initialValues={initialValues} onSubmit={onSubFu}>
-        <Form className={s.form}>
-          <Field name="query" className={s.field} />
-          <button type="submit" className={s.button}>
-            Search
-          </button>
-        </Form>
-      </Formik>
-    </>
+    <Formik initialValues={initialValues} onSubmit={onSubFu}>
+      <Form className={s.form}>
+        <Field name="query" className={s.field} />
+        <button type="submit" className={s.button}>
+          Search
+        </button>
+      </Form>
+    </Formik>
   );
 };
 
